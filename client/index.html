@@ -7,32 +7,35 @@
 
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/underscore/underscore-min.js"></script>
-    <script src="bower_components/backbone/backbone-min.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
     <!-- your scripts -->
-    <!-- // <script src="env/config.js"></script> -->
+<!--     // <script src="env/config.js"></script> -->
     <script src="scripts/app.js"></script>
   </head>
   <body>
     <div id="main">
-      <h1>chatterbox</h1>
-      <!-- Your HTML goes here! -->
-    
-    
-  <select id="roomSelect">
-    <option value="lobby">Lobby</option>
-    <option value="douglas">The Douglas</option>
-    <option value="Aj">Aj</option>
-    <option value="gisela">Gisela</option>
-</select>
-  <div id="chats"></div>
-  <!-- <form> -->
-    <!-- <div id = "send"  > -->
-    <form id = "send">
-    <input id="newMessage" placeholder="Please enter a message">
-    <input class="submit" type="button" value = "Submit">
+    <form id = "login" action="action_page.php">
+      What is your username?:<br>
+      <input id="username" type="text" action="">
+      <br>
+      <input id="firstlogin" type="button" value="Submit">
     </form>
-  <!-- </form> -->
-  </div>
+    <h1>chatterbox</h1>
+        <form id = "roomform">
+      Create room:<br>
+      <input id="newroom" type="text">
+      <br>
+      <input id="submitroom" type="button" value="Submit">
+    </form>
+    <form id = "send" action="">
+      Enter Chat:<br>
+      <input id="message" type="text" placeholder ="enter chat here">
+      <br>
+      <input class="submit" type="button" value="Submit">
+    </form>
+
+      <!-- Your HTML goes here! -->
+    </div>
+    <div id="chats"></div>
   </body>
 </html>

@@ -6,19 +6,13 @@ body {
 }
 
 #main, #chats {
+    width: 500px;
     margin: auto;
     text-align: left;
     background: white;
     padding: 50px 60px;
     border: solid #ddd;
     border-width: 0 1px 1px 1px;
-}
-#chats {
-    background-color: grey;
-    width: 400px;
-}
-#main{
-    width: 500px;
 }
 
 #main h1 {
@@ -71,9 +65,9 @@ form input[type=text] {
     background-color: #eee;
 }
 
-.chat .username {
-    font-weight: 800;
-}
+/*.chat .username {
+    font-weight: 400;
+}*/
 
 .chat:hover {
     background-color: #ddd;
@@ -88,6 +82,16 @@ form input[type=text] {
 .spinner img {
     padding: 10px;
 }
-.friend{
-    font-style: italic;
+
+.username {
+    float: left;
+}
+
+.hidden {
+/*    background-color: blue;*/
+   display: none;
+}
+
+.isFriend {
+    font-weight: bold;
 }
