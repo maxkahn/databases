@@ -44,7 +44,7 @@ app.use( function(req, res, next) {
   });
 
 app.get('/classes/messages', function(req, res) {
-        var queryString = "SELECT * FROM messages";
+        var queryString = "SELECT messages.Body, Usernames.Name AS user, Rooms.Name AS room FROM messages INNER JOIN Usernames ON messages.Usernames_id = Usernames.id INNER JOIN Rooms ON Rooms.id = messages.Rooms_id";
       dbConnection.query(queryString, function(err, results) {
         console.log(results);
         res.send(JSON.stringify(results));
@@ -52,9 +52,10 @@ app.get('/classes/messages', function(req, res) {
   //res.end("Received");
 });
 app.get('/', function(req, res) {
-        var queryString = "SELECT * FROM messages";
+  var queryString = "SELECT messages.Body, Usernames.Name AS user, Rooms.Name AS room FROM  messages INNER JOIN Usernames ON messages.Usernames_id = Usernames.id INNER JOIN Rooms ON Rooms.id = messages.Rooms_id";
+        //var queryString = "SELECT * FROM messages";
       dbConnection.query(queryString, function(err, results) {
-        console.log(err);
+        console.log(results);
         res.send(JSON.stringify(results));
       });
   //res.end("Received");
@@ -69,24 +70,38 @@ app.post('/', function(req, res) {
       var username = JSON.parse(body).username;
       //console.log(username);
       var messageBody = JSON.parse(body).text;
-      var room = JSON.parse(body).roomname;
+      console.log(messageBody);
+      var room = JSON.parse(body).roomname || 'lobby';
       //var queryStringName = "INSERT INTO Usernames (Name) VALUES ('" + username + "')";
       //var queryStringName = "INSERT INTO Usernames VALUES ('Max')";
-      var queryStringName = "INSERT INTO Usernames SET `Name` = 'Max'";
+
+      //remember to reset to actual usernames
+      var queryStringName = "INSERT INTO Usernames SET `Name` = '" + username +"'";
       dbConnection.query(queryStringName, function(err, results) {
-        console.log(results);
+        console.log("Inserting query: ", results);
         //I don't want to close the response here
         //but I do want to insert into the tables
       });
-      var queryStringRoom = "INSERT INTO Rooms (Name) VALUES ('"  + room + "')";
+                  
+
+      var queryStringRoom = "INSERT INTO Rooms SET `Name` = '"+room+"'";
       dbConnection.query(queryStringRoom, function(err, results) {
 
       });
-      var queryStringBody = "INSERT INTO messages (Body, Rooms_id, Usernames_id) VALUES ( '" + messageBody + "', (SELECT Rooms_id FROM Rooms), (SELECT Usernames_id FROM Usernames))";
+
+      //`Rooms_id` = (SELECT `Rooms_id` FROM Rooms WHERE `Name` = '" + room + "'),
+        //FOREIGN KEY(Rooms_id) References Rooms(id), FOREIGN KEY(Usernames_id) References Usernames(id));
+
+      var queryStringBody = "INSERT INTO messages SET `Body`='" + messageBody + "',`Rooms_id`=1,`Usernames_id`=1";
 
       dbConnection.query(queryStringBody, function(err, results) {
 
       });
+      var checkingQuery = "SELECT * FROM messages";
+      dbConnection.query(checkingQuery, function(err, results) {
+        console.log("Checking query -messages: ", results);
+      });
+
   });
 
   res.send("Posted");

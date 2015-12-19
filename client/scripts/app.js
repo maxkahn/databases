@@ -33,7 +33,6 @@ app.send = function(message) {
   
 
 app.fetch = function() {
-  debugger;
   $.ajax({
     url: this.server,
     type: 'GET',
@@ -43,7 +42,7 @@ app.fetch = function() {
 
       console.log(data);
 
-      data.results.forEach(function(item){
+      Array.prototype.forEach.call(data, function(item){
    // get the text of the chat
    // wrap it in some sort of div or span
         $chat = $('<div></div>');
