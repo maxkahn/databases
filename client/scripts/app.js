@@ -33,7 +33,7 @@ app.init = function () {
 
 app.send = function (message){
   $.ajax({
-    url: 'https://127.0.0.1:3000/',
+    url: 'http://127.0.0.1:3000/classes/messages',
     type: 'POST',
     data: JSON.stringify(message),
     contentType: 'application/json',
@@ -48,7 +48,7 @@ app.send = function (message){
 
 app.fetch = function (message){
   $.ajax({
-    url: 'https://127.0.0.1:3000/',
+    url: 'http://127.0.0.1:3000/classes/messages',
     type: 'GET',
     data: JSON.stringify(message),
     contentType: 'application/json',
@@ -123,7 +123,7 @@ app.addFriend = function(user, newFriend) {
   }
     // friends[user] = user;
     // $('#chats').find('.' + user).addClass('friend')
-  }
+  };
 
-  //setInterval(app.fetch, 500);
-})
+  // setInterval(app.fetch, 500);
+});
