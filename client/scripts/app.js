@@ -40,20 +40,20 @@ app.fetch = function() {
     contentType: 'application/json',
     success: function (data) {
 
-      console.log(data);
-
-      Array.prototype.forEach.call(data, function(item){
+      var results = JSON.parse(data);
+      results.forEach(function(item){
+        //console.log(item);
    // get the text of the chat
    // wrap it in some sort of div or span
         $chat = $('<div></div>');
      // var chatClass = "chat";
      // $chat.addClass("chat");
-        var chatName = item.username;
-        var chatBody = item.text;
+        var chatName = item.user;
+        var chatBody = item.Body;
         if( chatName && chatBody) {
           if ((chatBody.indexOf('src') ===-1 && chatName.indexOf('src') ===-1) 
             && chatBody.indexOf('script') ===-1 && chatName.indexOf('script') ===-1){
-              var chatRoom = item.roomname;
+              var chatRoom = item.room;
               window.rooms[chatRoom] = true;
 
               var noSpace = "";
