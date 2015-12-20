@@ -2,6 +2,7 @@ var express = require('express');
 var db = require('./db');
 var cors = require('cors');
 var mysql = require('mysql');
+var bodyParser = require('body-parser');
 
 var dbConnection = mysql.createConnection({
       user: "root",
@@ -24,6 +25,8 @@ module.exports.app = app;
 app.set("port", 3000);
 
 app.use(cors());
+
+app.use(bodyParser.json());
 
 app.use( function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
