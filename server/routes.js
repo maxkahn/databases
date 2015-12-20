@@ -3,7 +3,8 @@ var router = require('express').Router();
 
 
 for (var route in controllers) {
-  router.route("/" + route)
+  console.log('reached router');
+  router.route("/classes/" + route)
     .get(controllers[route].get)
     .post(controllers[route].post);
 }

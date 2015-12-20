@@ -43,69 +43,125 @@ app.use( function(req, res, next) {
         }
   });
 
-app.get('/classes/messages', function(req, res) {
-        var queryString = "SELECT messages.Body, Usernames.Name AS user, Rooms.Name AS room FROM messages INNER JOIN Usernames ON messages.Usernames_id = Usernames.id INNER JOIN Rooms ON Rooms.id = messages.Rooms_id";
-      dbConnection.query(queryString, function(err, results) {
-        console.log(results);
-        res.send(JSON.stringify(results));
-      });
-  //res.end("Received");
-});
-app.get('/', function(req, res) {
-  var queryString = "SELECT messages.Body, Usernames.Name AS user, Rooms.Name AS room FROM  messages INNER JOIN Usernames ON messages.Usernames_id = Usernames.id INNER JOIN Rooms ON Rooms.id = messages.Rooms_id";
-        //var queryString = "SELECT * FROM messages";
-      dbConnection.query(queryString, function(err, results) {
-        console.log(results);
-        res.send(JSON.stringify(results));
-      });
-  //res.end("Received");
-});
-app.post('/', function(req, res) {
-  console.log("Server thinks posted");
-  var body = "";
-  req.on('data', function(chunk) {
-    body += chunk;
-  });
-  req.on('end', function(err, req, res) {
-      var username = JSON.parse(body).username;
-      //console.log(username);
-      var messageBody = JSON.parse(body).text;
-      console.log(messageBody);
-      var room = JSON.parse(body).roomname || 'lobby';
-      //var queryStringName = "INSERT INTO Usernames (Name) VALUES ('" + username + "')";
-      //var queryStringName = "INSERT INTO Usernames VALUES ('Max')";
+// app.get('/classes/messages', function(req, res) {
+//         var queryString = "SELECT messages.Body, Usernames.Name AS user, Rooms.Name AS room FROM messages INNER JOIN Usernames ON messages.Usernames_id = Usernames.id INNER JOIN Rooms ON Rooms.id = messages.Rooms_id";
+//       dbConnection.query(queryString, function(err, results) {
+//         console.log(results);
+//         res.send(JSON.stringify(results));
+//       });
+//   //res.end("Received");
+// });
+// app.get('/', function(req, res) {
+//   var queryString = "SELECT messages.Body, Usernames.Name AS user, Rooms.Name AS room FROM  messages INNER JOIN Usernames ON messages.Usernames_id = Usernames.id INNER JOIN Rooms ON Rooms.id = messages.Rooms_id";
+//         //var queryString = "SELECT * FROM messages";
+//       dbConnection.query(queryString, function(err, results) {
+//         console.log(results);
+//         res.send(JSON.stringify(results));
+//       });
+//   //res.end("Received");
+// });
+// app.post('/', function(req, res) {
+//   console.log("Server thinks posted");
+//   var body = "";
+//   req.on('data', function(chunk) {
+//     body += chunk;
+//   });
+//   req.on('end', function(err, req, res) {
+//     // console.log(req);
+//       var username = JSON.parse(body).username;
+//       //console.log(username);
+//       var messageBody = JSON.parse(body).text;
+//       // console.log(messageBody);
+//       var room = JSON.parse(body).roomname || 'lobby';
+//       //var queryStringName = "INSERT INTO Usernames (Name) VALUES ('" + username + "')";
+//       //var queryStringName = "INSERT INTO Usernames VALUES ('Max')";
 
-      //remember to reset to actual usernames
-      var queryStringName = "INSERT INTO Usernames SET `Name` = '" + username +"'";
-      dbConnection.query(queryStringName, function(err, results) {
-        console.log("Inserting query: ", results);
-        //I don't want to close the response here
-        //but I do want to insert into the tables
-      });
+//       //remember to reset to actual usernames
+//       var queryStringName = "INSERT INTO Usernames SET `Name` = '" + username +"'";
+//       dbConnection.query(queryStringName, function(err, results) {
+//         console.log("Inserting query: ", results);
+//         //I don't want to close the response here
+//         //but I do want to insert into the tables
+//       });
                   
 
-      var queryStringRoom = "INSERT INTO Rooms SET `Name` = '"+room+"'";
-      dbConnection.query(queryStringRoom, function(err, results) {
+//       var queryStringRoom = "INSERT INTO Rooms SET `Name` = '"+room+"'";
+//       dbConnection.query(queryStringRoom, function(err, results) {
 
-      });
+//       });
 
-      //`Rooms_id` = (SELECT `Rooms_id` FROM Rooms WHERE `Name` = '" + room + "'),
-        //FOREIGN KEY(Rooms_id) References Rooms(id), FOREIGN KEY(Usernames_id) References Usernames(id));
+//       //`Rooms_id` = (SELECT `Rooms_id` FROM Rooms WHERE `Name` = '" + room + "'),
+//         //FOREIGN KEY(Rooms_id) References Rooms(id), FOREIGN KEY(Usernames_id) References Usernames(id));
 
-      var queryStringBody = "INSERT INTO messages SET `Body`='" + messageBody + "',`Rooms_id`=1,`Usernames_id`=1";
+//       var queryStringBody = "INSERT INTO messages SET `Body`='" + messageBody + "',`Rooms_id`=1,`Usernames_id`=1";
 
-      dbConnection.query(queryStringBody, function(err, results) {
+//       dbConnection.query(queryStringBody, function(err, results) {
 
-      });
-      var checkingQuery = "SELECT * FROM messages";
-      dbConnection.query(checkingQuery, function(err, results) {
-        console.log("Checking query -messages: ", results);
-      });
+//       });
+//       var checkingQuery = "SELECT * FROM messages";
+//       dbConnection.query(checkingQuery, function(err, results) {
+//         console.log("Checking query -messages: ", results);
+//       });
 
-  });
+//   });
 
-  res.send("Posted");
-});
+//   res.send("Posted");
+// });
+
+// app.post('/classes/messages', function(req, res) {
+//   console.log("Server thinks posted");
+//   var body = "";
+//   req.on('data', function(chunk) {
+//     body += chunk;
+//   });
+//   req.on('end', function(err, req, res) {
+//     console.log(JSON.parse(body));
+//       var username = JSON.parse(body).username;
+//       console.log(username);
+//       var messageBody = JSON.parse(body).text;
+//       console.log(messageBody);
+//       var room = JSON.parse(body).roomname || 'lobby';
+//       console.log(room);
+//       //var queryStringName = "INSERT INTO Usernames (Name) VALUES ('" + username + "')";
+//       //var queryStringName = "INSERT INTO Usernames VALUES ('Max')";
+
+//       //remember to reset to actual usernames
+//       var queryStringName = "INSERT INTO Usernames SET `Name` = '" + username +"'";
+//       dbConnection.query(queryStringName, function(err, results) {
+//         console.log("Inserting query: ", results);
+//         //I don't want to close the response here
+//         //but I do want to insert into the tables
+//       });
+
+                  
+
+//       var queryStringRoom = "INSERT INTO Rooms SET `Name` = '"+room+"'";
+//       dbConnection.query(queryStringRoom, function(err, results) {
+
+//       });
+
+
+//       //`Rooms_id` = (SELECT `Rooms_id` FROM Rooms WHERE `Name` = '" + room + "'),
+//         //FOREIGN KEY(Rooms_id) References Rooms(id), FOREIGN KEY(Usernames_id) References Usernames(id));
+
+//       //var queryStringBody = "INSERT INTO messages SET `Body`='" + messageBody + "',`Rooms_id`='" + room + "',`Usernames_id`='" + username + "'";
+//       var queryStringBody = "INSERT INTO messages SET `Body`='In mercy's name, three days is all I need.'";
+//       dbConnection.query(queryStringBody, function(err, results) {
+
+//       });
+//       var checkingQuery = "SELECT * FROM messages";
+//       dbConnection.query(checkingQuery, function(err, results) {
+//         console.log("Checking query -messages: ", results);
+//       });
+//       // var checkingQuery = "SELECT * FROM messages";
+//       // dbConnection.query(checkingQuery, function(err, results) {
+//       //   console.log("Checking query -messages: ", results);
+//       // });
+
+//   });
+
+//   res.send("Posted");
+// });
 //app.get('/', routes.index);
 
 

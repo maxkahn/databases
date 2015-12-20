@@ -6,7 +6,7 @@ window.friends = {};
 
 var app = {};
 
-app.server = 'http://127.0.0.1:3000/';
+app.server = 'http://127.0.0.1:3000/classes/messages';
 
 app.init = function() {
 
@@ -17,6 +17,7 @@ app.send = function(message) {
   // var message = {message: text,
   //               username: username,
   //               };
+  debugger;
   $.ajax({
     url: this.server,
     type: 'POST',
